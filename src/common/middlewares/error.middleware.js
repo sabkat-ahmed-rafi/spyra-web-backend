@@ -1,8 +1,15 @@
+const logger = require("../../config/logger");
 const { AppError, ConflictError, BadRequestError } = require("../common/errors");
 const { ValidationError, UniqueConstraintError, ForeignKeyConstraintError } = require("sequelize");
 
 const globalErrorHandlerMiddleware = (err, _, res, _) => {
-  console.error("GLOBAL ERROR :", err);
+
+  if (req.log) {
+    req.log.error({ err }, "Error caught in global handler");
+  } else {
+    // Fallback for non-request contexts
+    logger.error({ err }, "Error caught in global handler");
+  }
 
   let error = err;
 

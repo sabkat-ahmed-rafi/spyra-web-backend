@@ -1,10 +1,11 @@
 const express = require('express');
 const cors = require('cors');
-const morgan = require('morgan');
+const pinoHttp = require('pino-http');
 const compression = require('compression');
 
 const globalErrorHandlerMiddleware = require('./common/middlewares/error.middleware')
-const notFoundMiddleware = require('./common/middlewares/notFound.middleware')
+const notFoundMiddleware = require('./common/middlewares/notFound.middleware');
+const logger = require('./config/logger');
 
 const app = express();
 
@@ -22,7 +23,7 @@ app.use(express.urlencoded({ extended: true, limit: '1mb' }));
 
 // Utility middlewares
 app.use(compression()); 
-app.use(morgan('dev'));
+app.use(pinoHttp({ logger }));
 
 // Health check
 app.get('/health', (_, res) => {
