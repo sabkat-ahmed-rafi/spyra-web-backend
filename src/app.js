@@ -2,7 +2,9 @@ const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
 const compression = require('compression');
+
 const globalErrorHandlerMiddleware = require('./common/middlewares/error.middleware')
+const notFoundMiddleware = require('./common/middlewares/notFound.middleware')
 
 const app = express();
 
@@ -29,6 +31,10 @@ app.get('/health', (_, res) => {
   });
 });
 
+// 404 handler 
+app.use(notFoundMiddleware);
+
+// Global error handler 
 app.use(globalErrorHandlerMiddleware());
 
 
