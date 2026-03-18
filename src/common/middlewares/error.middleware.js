@@ -1,8 +1,8 @@
 const { AppError, ConflictError, BadRequestError } = require("../common/errors");
 const { ValidationError, UniqueConstraintError, ForeignKeyConstraintError } = require("sequelize");
 
-module.exports = (err, _, res, _) => {
-  console.error("ERROR :", err);
+const globalErrorHandlerMiddleware = (err, _, res, _) => {
+  console.error("GLOBAL ERROR :", err);
 
   let error = err;
 
@@ -33,3 +33,5 @@ module.exports = (err, _, res, _) => {
     ...(process.env.NODE_ENV === "development" && { stack: err.stack }),
   });
 };
+
+module.exports = globalErrorHandlerMiddleware;
