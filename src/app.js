@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
 const compression = require('compression');
+const globalErrorHandlerMiddleware = require('./common/middlewares/error.middleware')
 
 const app = express();
 
@@ -27,6 +28,8 @@ app.get('/health', (_, res) => {
     message: 'Server is healthy',
   });
 });
+
+app.use(globalErrorHandlerMiddleware());
 
 
 module.exports = app;
