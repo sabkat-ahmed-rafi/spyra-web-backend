@@ -20,5 +20,13 @@ app.use(express.urlencoded({ extended: true }));
 app.use(compression()); 
 app.use(morgan('dev'));
 
+// Health check
+app.get('/health', (_, res) => {
+  res.status(200).json({
+    success: true,
+    message: 'Server is healthy',
+  });
+});
+
 
 module.exports = app;
