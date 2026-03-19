@@ -37,7 +37,7 @@ app.get('/health', (_, res) => {
 app.use(notFoundMiddleware);
 
 // Global error handler 
-app.use(globalErrorHandlerMiddleware());
+app.use(globalErrorHandlerMiddleware);
 
 
 module.exports = app;
